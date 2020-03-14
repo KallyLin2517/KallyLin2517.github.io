@@ -90,25 +90,25 @@
             
             <li class="menu-item">
                 <a href="/">
-                    Home
+                    首页
                 </a>
             </li>
             
             <li class="menu-item">
                 <a href="/archives">
-                    Archives
+                    归档
                 </a>
             </li>
             
             <li class="menu-item">
                 <a href="/categories">
-                    Categories
+                    分类
                 </a>
             </li>
             
             <li class="menu-item">
                 <a href="/tags">
-                    Tags
+                    标签
                 </a>
             </li>
             
@@ -138,6 +138,64 @@
 </header>
 
         <section class="main">
+            
+                
+<div class="post">
+
+    <div class="post-header index">
+        <h1 class="title">
+            <a href="/2020/03/14/java%C2%B7%E5%9B%9B%E5%88%99%E6%B7%B7%E5%90%88%E8%BF%90%E7%AE%97%E8%AE%A1%E7%AE%97%E5%99%A8/">
+                java·四则混合运算计算器
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2020-03-14</span>
+            
+            
+            
+                <span class="category">
+                    <a href="/categories/Java/">Java</a>
+                </span>
+            
+        </div>
+    </div>
+
+    
+        <div class="content">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>刚学java时，被要求一段时间内做出一个计算器。当时一点思路都没有，上网找了不少教程不过看不懂。幸好，难题是慢慢被解决的，这个困扰了我很久的问题现在已经解决，于是来记录一下。仅以我自己的角度，尽可能写详细。</p>
+<h2 id="需要具备的知识点"><a href="#需要具备的知识点" class="headerlink" title="需要具备的知识点"></a>需要具备的知识点</h2><ul>
+<li><p>需要有java基础，入门教程可参考慕课网java入门<a href="https://www.imooc.com/learn/85" target="_blank" rel="noopener" title="java入门第一季">第一季</a>、<a href="https://www.imooc.com/learn/124" target="_blank" rel="noopener" title="java入门第二季">第二季</a>、<a href="https://www.imooc.com/learn/110" target="_blank" rel="noopener" title="java入门第三季">第三季</a>。个人认为如果只是做计算器，学到第三季第三章就差不多了。</p>
+</li>
+<li><p>数据结构关于栈的知识。只做计算器的话，知道<a href="https://blog.csdn.net/microopithecus/article/details/82848944" target="_blank" rel="noopener" title="java栈的用法其实不难">java的栈用法</a>就可以了，不过尽可能还是系统学习下数据结构的知识。因为只是单学栈，真的很容易一脸懵逼，而且也没有多大用处。数据结构推荐一下<a href="https://www.bilibili.com/video/av21828275?from=search&seid=5108816702796603017" target="_blank" rel="noopener" title="B站视频">小甲鱼的《数据结构与算法》 </a>（这个是C语言版），虽然频繁开车，但是作者语言轻松幽默，学起来轻松一点。</p>
+</li>
+<li><p><a href="https://www.cnblogs.com/fozero/p/7868687.html" target="_blank" rel="noopener" title="勇敢学，不要怕">正则表达式</a>。正则表达式是个好东西，做计算器虽然也不要求懂那么深，但还是要初步了解一下。</p>
+</li>
+</ul>
+<h2 id="能够实现的功能"><a href="#能够实现的功能" class="headerlink" title="能够实现的功能"></a>能够实现的功能</h2><p>目前的java计算器是控制台版本，输入一串算式并以“=”号结尾后就可以计算最终结果。支持整数与小数混合四则运算，不支持“（）”。我测试时最大的结果可以达到十的几百次方（最大可能是三百多），再往上，它结果就会显示“无穷”。有异常处理，非法输入会得到提醒。</p>
+<p>运行结果如下：</p>
+<blockquote>
+<p>请输入算式(以“=”结束,不允许添加“（）”)：</p>
+</blockquote>
+<blockquote>
+<p><u> 22.4+8*2-1+9/3= </u></p>
+</blockquote>
+<blockquote>
+<p>运算结果为：40.4</p>
+</blockquote>
+<p>其中下划线的内容是可输入的。</p>
+<h2 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h2><ol>
+<li>建立两个栈，分别用来存储运算符和数字；</li>
+<li>用一个字符串存储从键盘键入的算式；</li>
+<li>用正则表达式处理原始字符串，按顺序将数字和运算符存入两个数组中。如“1+9/3-2=”中，处理后得到数字数组num[4]={1,9,3,2},得到运算符数组char[4]={+,/,-,=}。</li>
+<li>数字不需要判断优先级，运算符需要，所以要为运算符设定等级。这里假设”=”的等级为1，”+ -“等级为2，“* /”等级为3。</li>
+<li>首先让num[0]入数字栈，然后取char[0],比较它与栈顶元素的等级。因此此时运算符栈为空栈，无需判断直接入栈。再取num[1]放入数字栈，接着取char[1]。因为”/“的等级大于此时运算符栈的栈顶元素等级，继续压栈。第三回取num[2]放入数字栈，再取char[2]。此时的char[2]是“-”，等级为2，小于运算符栈的栈顶元素，因此不能压栈，先把它放一边。对运算符栈弹栈一次，对数字栈弹栈两次。这里弹出来的</li>
+</ol>
+
+        </div>
+    
+
+</div>
             
                 
 <div class="post">
@@ -189,7 +247,7 @@
 
     <div class="post-header index">
         <h1 class="title">
-            <a href="/2020/03/11/github-gridea-hexo/">
+            <a href="/2020/03/11/WELCOME/">
                 WELCOME
             </a>
         </h1>
@@ -211,8 +269,8 @@
             <h1 id="关于该网站"><a href="#关于该网站" class="headerlink" title="关于该网站"></a>关于该网站</h1><p>网站的图标是L，我姓氏的首字母。C·T·H代表的是“courage”，“try”和“hope”，也是我在做这个网页时最大的感触。</p>
 <p>本来是打算直接用我名字的拼音缩写做网站名字，不过效果一上来看了下有点怪怪的，果断换掉。</p>
 <p>最开始用了gridea做管理工具，可是它主题太少了，完全满足不了我，于是换了hexo。该网页的主题是hexo主题<a href="http://www.codeblocq.com/assets/projects/hexo-theme-alpha-dust/" target="_blank" rel="noopener" title="未来感主题">Alpha Dust</a>，第一眼就喜欢上了，因此就拿来用。</p>
-<h1 id="网站里有什么"><a href="#网站里有什么" class="headerlink" title="网站里有什么"></a>网站里有什么</h1><p>有可爱美丽动人大方善良的网站主人和她的学习笔记。</p>
-<h1 id="社交链接"><a href="#社交链接" class="headerlink" title="社交链接"></a>社交链接</h1><p>网站底部的社交链接是无用的，因为懒我还没把自己的社交链接放上去（再说我也没那么多社交账号）。本来想直接把图标都屏蔽掉，但是屏蔽之后网站底部空空的，好像不太好看，遂决定保留。</p>
+<h1 id="网站里有什么"><a href="#网站里有什么" class="headerlink" title="网站里有什么"></a>网站里有什么</h1><p>有可爱善良美丽动人的网站主人和她的学习笔记，如果不出意外的话每周六更新一次网站。查找笔记请点击右上角菜单，根据“时间轴”“分类”或“标签”查找。</p>
+<h1 id="社交链接"><a href="#社交链接" class="headerlink" title="社交链接"></a>社交链接</h1><p>网站底部的社交链接是无用的，就算能连接到某处，也是该主题的作者的社交链接。因为懒我还没把自己的社交链接放上去（再说我也没那么多社交账号），本来想先把图标都屏蔽掉。不过屏蔽之后网站底部空空的，不太好看，遂决定保留。</p>
 
         </div>
     
@@ -248,11 +306,15 @@
         <ul>
             
             <li>
+                <a class="footer-post" href="/2020/03/14/java%C2%B7%E5%9B%9B%E5%88%99%E6%B7%B7%E5%90%88%E8%BF%90%E7%AE%97%E8%AE%A1%E7%AE%97%E5%99%A8/">java·四则混合运算计算器</a>
+            </li>
+            
+            <li>
                 <a class="footer-post" href="/2020/03/12/%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E5%BB%BA%E9%80%A0%E8%87%AA%E5%B7%B1%E7%9A%84%E7%BD%91%E7%AB%99/">问，如何快速创建一个自己的网页？</a>
             </li>
             
             <li>
-                <a class="footer-post" href="/2020/03/11/github-gridea-hexo/">WELCOME</a>
+                <a class="footer-post" href="/2020/03/11/WELCOME/">WELCOME</a>
             </li>
             
         </ul>
@@ -271,6 +333,10 @@
         
         <li>
             <a class="footer-post" href="/categories/%E6%9C%AC%E7%AB%99%E7%9B%B8%E5%85%B3/">本站相关</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/Java/">Java</a>
         </li>
         
     </ul>
