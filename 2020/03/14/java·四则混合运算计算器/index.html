@@ -189,9 +189,223 @@
 <li>建立两个栈，分别用来存储运算符和数字；</li>
 <li>用一个字符串存储从键盘键入的算式；</li>
 <li>用正则表达式处理原始字符串，按顺序将数字和运算符存入两个数组中。如“1+9/3-2=”中，处理后得到数字数组num[4]={1,9,3,2},得到运算符数组char[4]={+,/,-,=}。</li>
-<li>数字不需要判断优先级，运算符需要，所以要为运算符设定等级。这里假设”=”的等级为1，”+ -“等级为2，“* /”等级为3。</li>
-<li>首先让num[0]入数字栈，然后取char[0],比较它与栈顶元素的等级。因此此时运算符栈为空栈，无需判断直接入栈。再取num[1]放入数字栈，接着取char[1]。因为”/“的等级大于此时运算符栈的栈顶元素等级，继续压栈。第三回取num[2]放入数字栈，再取char[2]。此时的char[2]是“-”，等级为2，小于运算符栈的栈顶元素，因此不能压栈，先把它放一边。对运算符栈弹栈一次，对数字栈弹栈两次。这里弹出来的</li>
+<li>数字不需要判断优先级，运算符需要，所以要为运算符设定等级。这里假设”=”的等级为1，”+ -“等级为2，“* /”等级为3。当即将入栈的运算符等级等于或小于栈顶元素的运算符等级，则需弹数字栈两次，弹运算符栈一次。</li>
+<li>首先让num[0]入数字栈，然后取char[0],比较它与栈顶元素的等级。因此此时运算符栈为空栈，无需判断直接入栈。再取num[1]放入数字栈，接着取char[1]。因为”/“的等级大于此时运算符栈的栈顶元素等级，继续压栈。第三回取num[2]放入数字栈，再取char[2]。此时的char[2]是“-”，等级为2，小于运算符栈的栈顶元素，因此不能压栈，先把它放一边。对运算符栈弹栈一次，对数字栈弹栈两次。这里弹出来的数字是9和3，弹出来的运算符是/，将9和3进行除法计算，将结果入栈。此时数字栈内是3和1，运算符栈是“+”。把之前扔一边的char[2]再取过来，继续和栈顶元素比较，发现二者等级相等，依旧不能入栈，而是要弹数字栈两次，弹符号栈一次进行计算。1+3结果为4，将4压入数字栈，第三次把char[2]取过来。因为此时运算符栈已经是空栈，于是直接让char[2]压栈即可。后面运算过程就是如此，直到最后运算符栈只剩下一个“=”的时候，数字栈也只剩下一个元素，就是最终得数。</li>
 </ol>
+<p>请不要责怪我排版为何如此糟糕，我不太会用Markdown语言orz</p>
+<p>我觉得第三步和第五步是最重要的，只要明白了如何用栈处理混合四则运算式，然后用正则表达式帮助切割输入的字符串，问题基本就解决了。</p>
+<h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><blockquote>
+<p>package com.calculator;//<em>这个是包名</em></p>
+</blockquote>
+<blockquote>
+<p>//导入各种东西</p>
+</blockquote>
+<blockquote>
+<p>import java.util.Arrays;</p>
+</blockquote>
+<blockquote>
+<p>import java.util.EmptyStackException;</p>
+</blockquote>
+<blockquote>
+<p>import java.util.InputMismatchException;</p>
+<p>import java.util.Scanner;</p>
+<p>import java.util.Stack;</p>
+<p>public class Intital {</p>
+<p>   public double c;</p>
+<p>   //计算</p>
+</blockquote>
+<blockquote>
+<p>   public double count(double b,double a,char ch) {    </p>
+</blockquote>
+<blockquote>
+<pre><code>   switch(ch) {
+
+   case &apos;+&apos;:
+
+       c=a+b;
+
+       break;
+
+   case &apos;-&apos;:
+
+       c=a-b;
+
+       break;
+
+   case &apos;*&apos;:
+
+       c=a*b;
+
+       break;
+
+   case &apos;/&apos;:
+
+       if(b==0) {
+
+           throw new ArithmeticException(); 
+
+       }
+
+       c=a/b;
+
+       break;
+
+   }
+
+   return c;
+
+}
+
+public static void main(String[] args) {
+
+   try {
+
+   Intital test = new Intital();
+
+   //数字栈
+
+   Stack stackNum=new Stack();
+
+   //运算符栈
+
+   Stack stackChar=new Stack();
+
+   //运算符等级数组
+
+   int[] rank = new int[15];
+
+   Scanner input = new Scanner(System.in);
+
+   System.out.println(&quot;请输入算式(以“=”结束,不允许添加“（）”)：&quot;);
+
+   String str0 = input.nextLine();
+
+   //int tempRank = 0;
+
+   //存储数字
+
+   String[] str1 = str0.split(&quot;\\+|\\-|\\*|\\/|\\=&quot;);    
+
+
+   //存储运算符
+
+   String str2 = str0.replaceAll(&quot;[^\\\\*|\\\\/|\\\\+|\\\\=|\\\\-]&quot;, &quot;&quot;);
+
+   //将str2转换为字符串数组
+
+   String[] str3 = str2.split(&quot;&quot;);
+
+   //至此，str1[]存储着数字，str3[]存储着运算符
+
+   //获取str1的长度
+
+   int str1Length = str1.length;
+
+   for(int i=0;i&lt;str1Length;i++) {
+
+       //将字符转为double型
+
+       double num = Double.parseDouble(str1[i]);
+
+       //数字进栈
+
+       stackNum.push(num);
+
+       switch(str3[i].charAt(0)) {
+
+       //&quot;=&quot;的等级为1，&quot;+ -&quot;等级为2，“* /”等级为3
+
+       case &apos;+&apos;:
+
+       case &apos;-&apos;:
+
+           rank[i]=2;
+
+           break;
+
+       case &apos;*&apos;:
+
+       case &apos;/&apos;:
+
+           rank[i]=3;
+
+           break;
+
+       case &apos;=&apos;:
+
+           rank[i]=1;
+
+           break;
+
+       }
+
+       int j = i-1;
+
+       //判断是否空栈,如果是直接压栈;如果不是空栈，需要判断优先级
+
+       if(stackChar.empty()) {
+
+           stackChar.push(str3[i].charAt(0));
+
+       }else {
+
+           //当strack2不为空时，分为两种情况，
+
+           //rank[i]&gt;rank[j]和rank[i]&lt;=rank[j]
+
+           //当rank[i]&lt;=rank[j]时一直循环
+
+           while(rank[i]&lt;=rank[j]) {
+
+           double total = test.count((double)stackNum.pop(), (double)stackNum.pop(), (char)stackChar.pop());
+
+            j--;
+
+            stackNum.push(total);
+
+            //在这里需要判断一下运算符栈是否为空，为空则停止循
+            环，跳出
+
+            if(stackChar.empty()) {
+
+               break;
+
+            }
+
+           }
+
+           stackChar.push(str3[i].charAt(0));
+
+       }
+
+   }
+
+   System.out.println(&quot;运算结果为：&quot;+stackNum.pop());
+
+   } catch (NumberFormatException e) {
+
+       System.out.println(&quot;请输入正确的运算式,或首位数不要为负数。&quot;);
+
+   } catch (ArithmeticException e) {
+
+       System.out.println(&quot;除数不能为零。&quot;);
+
+   } catch (ArrayIndexOutOfBoundsException e) {
+
+       System.out.println(&quot;请以“=”结束。&quot;);
+
+   } catch(EmptyStackException e) {
+
+       System.out.println(&quot;请输入正确的运算式，或首位数不要为负数。&quot;);
+
+          }
+   }}</code></pre></blockquote>
+<p>从markdownPad2客户端的预览上看，上面这段代码的显示有点奇怪呢……</p>
+<p>算了，不管了。以上是从我的eclipse上直接把代码黏贴过来的，是可以执行的代码。我用了double型来存储数据，最后结果会保留一位小数，我觉得还是够用的了。</p>
+<p>目前考虑给这个计算器做个可视化界面，等我研究出来了，过段时间再把笔记整理出来。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>没什么好总结的，遇到困难不要慌不要怕，你要这样想：</p>
+<p><del><del>菜又怎么了，这么菜还有勇气努力不是更厉害吗</del></del></p>
+<p>你遇到困难的时候别人也会遇到困难，大家都是一样的。区别是遇到困难时的态度，想着“遇到这种困难是正常”并沉下心淡定解决，和想着“天啊我根本学不会/不想学这种东西老子不学了”而果断放弃<del><del>（虽然我自己常常这样）</del></del>，两种想法最后形成的结果往往是截然不同的。</p>
 
     </div>
 
