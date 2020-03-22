@@ -20,7 +20,7 @@
 
     <!--Open Graph Title-->
     
-        <meta property="og:title" content="tags"/>
+        <meta property="og:title" content="C·图种生成器"/>
     
 
     <!--Open Graph Description-->
@@ -47,7 +47,7 @@
 
     <!-- Title -->
     
-    <title>tags - C · T · H</title>
+    <title>C·图种生成器 - C · T · H</title>
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
@@ -128,79 +128,117 @@
     <div class="col-sm-12">
 
         <!--Title and Logo-->
-        
-            <header>
+        <header>
     <div class="logo">
-        <a href="/"><i class="logo-icon fa fa-tags" aria-hidden="true"></i></a>
-        
-            <h1 id="main-title" class="title">tags</h1>
+        <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
         
     </div>
 </header>
-            <section class="main archive-container">
-                
-                        <div class="archive-post">
-    <a href="/tags/github/">
-        #github
-    </a>
-</div>
-                
-                        <div class="archive-post">
-    <a href="/tags/gridea/">
-        #gridea
-    </a>
-</div>
-                
-                        <div class="archive-post">
-    <a href="/tags/hexo/">
-        #hexo
-    </a>
-</div>
-                
-                        <div class="archive-post">
-    <a href="/tags/eclipse/">
-        #eclipse
-    </a>
-</div>
-                
-                        <div class="archive-post">
-    <a href="/tags/%E8%AE%A1%E7%AE%97%E5%99%A8/">
-        #计算器
-    </a>
-</div>
-                
-                        <div class="archive-post">
-    <a href="/tags/%E9%9A%8F%E4%BE%BF%E7%9E%8E%E8%AF%BB/">
-        #随便瞎读
-    </a>
-</div>
-                
-                        <div class="archive-post">
-    <a href="/tags/%E5%8F%8D%E6%80%9D/">
-        #反思
-    </a>
-</div>
-                
-                        <div class="archive-post">
-    <a href="/tags/%E8%87%AA%E6%88%91%E6%8E%A2%E7%B4%A2/">
-        #自我探索
-    </a>
-</div>
-                
-                        <div class="archive-post">
-    <a href="/tags/devC/">
-        #devC++
-    </a>
-</div>
-                
-                        <div class="archive-post">
-    <a href="/tags/%E6%96%87%E4%BB%B6%E5%90%88%E6%88%90/">
-        #文件合成
-    </a>
-</div>
-                
-            </section>
+
+        <section class="main">
+            
+<div class="post">
+
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2020/03/22/C%C2%B7%E5%9B%BE%E7%A7%8D%E7%94%9F%E6%88%90%E5%99%A8/">
+                C·图种生成器
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2020-03-22</span>
+            
+            
+            
+                <span class="category">
+                    <a href="/categories/C语言/">C语言</a>
+                </span>
+            
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
         
+
+        <!-- Post Content -->
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>程序教程来自B站小甲鱼《C语言与程序设计》最后关于“文件操作”的几P，这个东西我自己取名图种生成器，其实是我自己的恶趣味。更准确的说法应该是文件合成器才对，因为本质就是把两个文件拼接到一起。</p>
+<h2 id="需要具备的知识点"><a href="#需要具备的知识点" class="headerlink" title="需要具备的知识点"></a>需要具备的知识点</h2><p>会敲C语言，会用C语言文件操作的几个文件。如果不会的话也没关系，右转小甲鱼教程，你就是下一个图种制造大师。</p>
+<p>或者，啥都不会也可以，只要是个活人会调出控制台就行。</p>
+<h2 id="能够实现的功能"><a href="#能够实现的功能" class="headerlink" title="能够实现的功能"></a>能够实现的功能</h2><p>每个人的电脑里可能会有些不想被人发现的秘密，假如这个秘密藏在一个rar压缩文件里，你可以通过该程序把它和一张图片拼接到一起。这样，平时的后缀名为jpg时，看起来就是普通得不能再普通得图片；但是如果把后缀名改成rar，同样是一个可执行程序，可以解压。</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><h3 id="简易版"><a href="#简易版" class="headerlink" title="简易版"></a>简易版</h3><ol>
+<li>首先，因为我的控制台打开后默认位置是C盘的用户&gt;lenovo，我就先把一个1.jpg文件和一个2.rar放到这个文件夹下，这两个文件就是等会要合成的素材。</li>
+<li>win+R打开控制台，输入cmd，回车。</li>
+<li>输入copy 1.jpg+2.rar 3.jpg，其中3.jpg是合成后的文件名，输入之后回车。</li>
+<li>好了，刚刚的文件夹就多了一个3.jpg的文件，点开看是图片。但是如果把后缀名改成rar，它就会解压出2.rar里的东西。<del><del>我为什么要在这里记这些这么傻白甜的操作</del></del></li>
+</ol>
+<h3 id="进阶版"><a href="#进阶版" class="headerlink" title="进阶版"></a>进阶版</h3><p>进阶版就是自己写一个程序了，事实上只要那几个函数会用了，不难的。</p>
+<p>代码思路大致如下：</p>
+<ol>
+<li>输入第一个文件的名字，用fopen（）函数，rb方式打开这个文件。（这个文件必须存在）</li>
+<li>用第一步的方法打开第二个文件。</li>
+<li>输入第三个文件的名字，用fopen（）函数，wb方式打开这个文件（实际上是新建）。</li>
+<li>用fgetc（）函数读取第一个文件和第二个文件每一个字符，用fputc()函数将读取到的写入第三个文件中。</li>
+<li>大功告成。<del><del>所以我为什么要在这里记这些这么傻白甜的操作</del></del></li>
+</ol>
+<p>代码如下：</p>
+<blockquote>
+<p>#include&lt;stdio.h&gt;<br>int main(){</p>
+</blockquote>
+<pre><code>FILE *fp,*fp2,*fp3;
+char ch,filename[20]={0},filename2[20]={0},filename3[20]={0};    
+printf(&quot;请输入第一个文件名字：&quot;);
+
+scanf(&quot;%s&quot;,filename);
+
+if(!(fp=fopen(filename,&quot;rb&quot;) )){
+    printf(&quot;找不到指定文件\n&quot;); 
+    return;
+}
+printf(&quot;请输入第二个文件名字：&quot;);
+scanf(&quot;%s&quot;,filename2);
+if(!(fp2=fopen(filename2,&quot;rb&quot;) )){
+    printf(&quot;找不到指定文件\n&quot;); 
+    return;
+}
+printf(&quot;请输入要生成的文件名字：&quot;);
+scanf(&quot;%s&quot;,filename3); 
+fp3=fopen(filename3,&quot;wb&quot;);
+while(!(feof(fp))){
+ch=fgetc(fp);
+fputc(ch,fp3);
+}
+fclose(fp);
+while(!(feof(fp2))){
+    ch=fgetc(fp2);
+    fputc(ch,fp3);
+}
+printf(&quot;已经生成\n&quot;); 
+fclose(fp2);
+fclose(fp3);
+return 0;</code></pre><p>}</p>
+<p>我懂，因为背景原因上边这段根本看不清。没事，鼠标右键选中文本，你值得拥有。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>好好学习，天天向上。</p>
+
+    </div>
+
+    
+
+    
+        <div class="post-tags">
+            <i class="fa fa-tags" aria-hidden="true"></i>
+            <a href="/tags/devC/">#devC++</a> <a href="/tags/文件合成/">#文件合成</a>
+        </div>
+    
+
+    <!-- Comments -->
+    
+
+</div>
+        </section>
+
     </div>
 </div>
 
